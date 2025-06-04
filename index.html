@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nepal Tip Jar - eSewa, Khalti & Bank Support</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        :root {
+            --primary: #2e7d32;
+            --primary-dark: #1b5e20;
+            --secondary: #1565c0;
+            --accent: #ff6f00;
+            --light: #f5f5f7;
+            --dark: #1a1a2e;
+            --card-bg-light: #ffffff;
+            --card-bg-dark: #252540;
+            --text-dark: #2d3748;
+            --text-light: #e2e8f0;
+            --success: #4caf50;
+            --error: #f44336;
+            --warning: #ff9800;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --border-radius: 16px;
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+        
+        body.dark-mode {
+            background: linear-gradient(135deg, #0d1a4d, #7a1515, #0d1a4d);
+            color: var(--text-light);
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .app-container {
+            width: 100%;
+            max-width: 500px;
+            background: var(--card-bg-light);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        body.dark-mode .app-container {
+            background: var(--card-bg-dark);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .app-header {
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            padding: 1.8rem 1.5rem;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .app-header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(30deg);
+        }
+        
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.2rem;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            backdrop-filter: blur(5px);
+        }
+        
+        .app-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .app-subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+        
+        .app-content {
+            padding: 2rem 1.5rem;
+        }
+        
+        .card {
+            background: var(--card-bg-light);
+            border-radius: var(--border-radius);
+            padding: 1.8rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        body.dark-mode .card {
+            background: var(--card-bg-dark);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card-title {
+            font-size: 1.3rem;
+            margin-bottom: 1.2rem;
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        
+        body.dark-mode .card-title {
+            color: #4CAF50;
+        }
+        
+        .card-title svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--primary);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+        
+        body.dark-mode .form-label {
+            color: var(--text-light);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: var(--transition);
+            background: var(--card-bg-light);
+            color: var(--text-dark);
+        }
+        
+        body.dark-mode .form-input {
+            background: #2d2d4a;
+            border-color: #3a3a5a;
+            color: var(--text-light);
+        }
+        
+        .form-input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.2);
+        }
+        
+        body.dark-mode .form-input:focus {
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3);
+        }
+        
+        textarea.form-input {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+            margin: 1.5rem 0;
+        }
+        
+        .payment-method {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        body.dark-mode .payment-method {
+            background: #2d2d4a;
+            border-color: #3a3a5a;
+        }
+        
+        .payment-method:hover {
+            border-color: var(--primary);
+        }
+        
+        .payment-method.selected {
+            border-color: var(--primary);
+            background: rgba(46, 125, 50, 0.05);
+            box-shadow: 0 4px 12px rgba(46, 125, 50, 0.1);
+        }
+        
+        body.dark-mode .payment-method.selected {
+            background: rgba(76, 175, 80, 0.1);
+            box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2);
+        }
+        
+        .payment-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .esewa .payment-icon {
+            background: #55c22b;
+        }
+        
+        .khalti .payment-icon {
+            background: #5C2D91;
+        }
+        
+        .bank .payment-icon {
+            background: #1565c0;
+        }
+        
+        .payment-name {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        body.dark-mode .payment-name {
+            color: var(--text-light);
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3);
+            gap: 0.8rem;
+            width: 100%;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background: linear-gradient(to right, var(--primary-dark), #144b18);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(46, 125, 50, 0.4);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            box-shadow: none;
+            margin-top: 0.8rem;
+        }
+        
+        body.dark-mode .btn-secondary {
+            color: #4CAF50;
+            border-color: #4CAF50;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(46, 125, 50, 0.1);
+        }
+        
+        .payment-details {
+            background: rgba(46, 125, 50, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            border-left: 4px solid var(--primary);
+        }
+        
+        body.dark-mode .payment-details {
+            background: rgba(76, 175, 80, 0.1);
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .details-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        body.dark-mode .details-title {
+            color: #4CAF50;
+        }
+        
+        .details-content {
+            line-height: 1.6;
+        }
+        
+        .detail-item {
+            margin-bottom: 0.5rem;
+            display: flex;
+        }
+        
+        .detail-label {
+            font-weight: 500;
+            min-width: 120px;
+        }
+        
+        body.dark-mode .detail-label {
+            color: var(--text-light);
+        }
+        
+        .qr-container {
+            display: flex;
+            justify-content: center;
+            margin: 1.5rem 0;
+        }
+        
+        .qr-code {
+            width: 180px;
+            height: 180px;
+            background: white;
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        body.dark-mode .qr-code {
+            background: #2d2d4a;
+        }
+        
+        .qr-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #f5f5f5 25%, #e0e0e0 25%, #e0e0e0 50%, #f5f5f5 50%, #f5f5f5 75%, #e0e0e0 75%);
+            background-size: 20px 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #757575;
+            font-weight: 500;
+        }
+        
+        body.dark-mode .qr-placeholder {
+            background: linear-gradient(45deg, #2d2d4a 25%, #3a3a5a 25%, #3a3a5a 50%, #2d2d4a 50%, #2d2d4a 75%, #3a3a5a 75%);
+            color: #a0a0c0;
+        }
+        
+        .app-footer {
+            padding: 1.5rem;
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            background: #f9f9f9;
+        }
+        
+        body.dark-mode .app-footer {
+            background: #1f1f35;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 0.8rem;
+        }
+        
+        .footer-link {
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        
+        body.dark-mode .footer-link {
+            color: #4CAF50;
+        }
+        
+        .footer-link:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .success-message {
+            background: rgba(76, 175, 80, 0.1);
+            border-left: 4px solid var(--success);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin-top: 1.5rem;
+        }
+        
+        body.dark-mode .success-message {
+            background: rgba(76, 175, 80, 0.15);
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            font-size: 1.2rem;
+            backdrop-filter: blur(5px);
+            z-index: 10;
+        }
+        
+        body.dark-mode .theme-toggle {
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        .payment-icon-svg {
+            width: 30px;
+            height: 30px;
+        }
+        
+        @media (max-width: 500px) {
+            .app-content {
+                padding: 1.5rem;
+            }
+            
+            .card {
+                padding: 1.5rem;
+            }
+            
+            .btn {
+                padding: 0.9rem 1.5rem;
+                font-size: 1rem;
+            }
+            
+            .payment-methods {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+    </button>
+    
+    <div class="app-container">
+        <div class="app-header">
+            <div class="logo-container">
+                <div class="logo">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM16 16H8C7.45 16 7 15.55 7 15V9C7 8.45 7.45 8 8 8H16C16.55 8 17 8.45 17 9V15C17 15.55 16.55 16 16 16Z" fill="white"/>
+                    </svg>
+                </div>
+            </div>
+            <h1 class="app-title">Nepal Tip Jar</h1>
+            <p class="app-subtitle">Support creators with eSewa, Khalti & Bank Transfer</p>
+        </div>
+        
+        <div class="app-content">
+            <div class="card">
+                <h3 class="card-title">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1ZM12 11.99H19C18.47 16.11 15.72 19.78 12 20.93V12H5V6.3L12 3.19V11.99Z" fill="currentColor"/>
+                    </svg>
+                    Send a Tip
+                </h3>
+                
+                <div class="form-group">
+                    <label class="form-label">Your Name (Optional)</label>
+                    <input type="text" class="form-input" placeholder="Enter your name">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Tip Amount (NPR)</label>
+                    <input type="number" class="form-input" placeholder="Enter amount" value="100">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Message (Optional)</label>
+                    <textarea class="form-input" placeholder="Add a message (optional)" rows="3"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Select Payment Method</label>
+                    <div class="payment-methods">
+                        <div class="payment-method esewa selected" data-method="esewa">
+                            <div class="payment-icon">
+                                <svg class="payment-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM16 16H8C7.45 16 7 15.55 7 15V9C7 8.45 7.45 8 8 8H16C16.55 8 17 8.45 17 9V15C17 15.55 16.55 16 16 16Z" fill="white"/>
+                                </svg>
+                            </div>
+                            <div class="payment-name">eSewa</div>
+                        </div>
+                        <div class="payment-method khalti" data-method="khalti">
+                            <div class="payment-icon">
+                                <svg class="payment-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M17 1H7C5.9 1 5 1.9 5 3V21C5 22.1 5.9 23 7 23H17C18.1 23 19 22.1 19 21V3C19 1.9 18.1 1 17 1ZM17 19H7V5H17V19Z" fill="white"/>
+                                    <path d="M12 18C13.6569 18 15 16.6569 15 15C15 13.3431 13.6569 12 12 12C10.3431 12 9 13.3431 9 15C9 16.6569 10.3431 18 12 18Z" fill="white"/>
+                                </svg>
+                            </div>
+                            <div class="payment-name">Khalti</div>
+                        </div>
+                        <div class="payment-method bank" data-method="bank">
+                            <div class="payment-icon">
+                                <svg class="payment-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M21 5V19C21 20.1 20.1 21 19 21H5C3.9 21 3 20.1 3 19V5C3 3.9 3.9 3 5 3H19C20.1 3 21 3.9 21 5ZM11 17H13V11H11V17ZM11 9H13V7H11V9Z" fill="white"/>
+                                </svg>
+                            </div>
+                            <div class="payment-name">Bank</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2.01 21L23 12L2.01 3L2 10L17 12L2 14L2.01 21Z" fill="white"/>
+                    </svg>
+                    Continue to Payment
+                </button>
+            </div>
+            
+            <div class="card">
+                <h3 class="card-title">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 21C4.45 21 3.97917 20.8042 3.5875 20.4125C3.19583 20.0208 3 19.55 3 19V5C3 4.45 3.19583 3.97917 3.5875 3.5875C3.97917 3.19583 4.45 3 5 3H19C19.55 3 20.0208 3.19583 20.4125 3.5875C20.8042 3.97917 21 4.45 21 5V19C21 19.55 20.8042 20.0208 20.4125 20.4125C20.0208 20.8042 19.55 21 19 21H5ZM5 19H19V5H5V19ZM7 17H17V7H7V17Z" fill="currentColor"/>
+                    </svg>
+                    Pay with eSewa
+                </h3>
+                
+                <div class="qr-container">
+                    <div class="qr-code">
+                        <div class="qr-placeholder">
+                            Scan to Pay
+                        </div>
+                          </div>
+                            </div>
+                
+                <div class="payment-details">
+                    <div class="details-title">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11 17H13V11H11V17ZM12 9C12.2833 9 12.5208 8.90417 12.7125 8.7125C12.9042 8.52083 13 8.28333 13 8C13 7.71667 12.9042 7.47917 12.7125 7.2875C12.5208 7.09583 12.2833 7 12 7C11.7167 7 11.4792 7.09583 11.2875 7.2875C11.0958 7.47917 11 7.71667 11 8C11 8.28333 11.0958 8.52083 11.2875 8.7125C11.4792 8.90417 11.7167 9 12 9ZM12 22C10.6167 22 9.31667 21.7375 8.1 21.2125C6.88333 20.6875 5.825 19.975 4.925 19.075C4.025 18.175 3.3125 17.1167 2.7875 15.9C2.2625 14.6833 2 13.3833 2 12C2 10.6167 2.2625 9.31667 2.7875 8.1C3.3125 6.88333 4.025 5.825 4.925 4.925C5.825 4.025 6.88333 3.3125 8.1 2.7875C9.31667 2.2625 10.6167 2 12 2C13.3833 2 14.6833 2.2625 15.9 2.7875C17.1167 3.3125 18.175 4.025 19.075 4.925C19.975 5.825 20.6875 6.88333 21.2125 8.1C21.7375 9.31667 22 10.6167 22 12C22 13.3833 21.7375 14.6833 21.2125 15.9C20.6875 17.1167 19.975 18.175 19.075 19.075C18.175 19.975 17.1167 20.6875 15.9 21.2125C14.6833 21.7375 13.3833 22 12 22Z" fill="currentColor"/>
+                        </svg>
+                        Payment Details
+                    </div>
+                    <div class="details-content">
+                        <div class="detail-item">
+                            <span class="detail-label">eSewa ID:</span>
+                            <span>9812345678</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Recipient Name:</span>
+                            <span>Creative Nepal</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Amount:</span>
+                            <span>NPR 100.00</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn btn-secondary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17 1H7C5.9 1 5 1.9 5 3V21C5 22.1 5.9 23 7 23H17C18.1 23 19 22.1 19 21V3C19 1.9 18.1 1 17 1ZM17 19H7V5H17V19Z" fill="currentColor"/>
+                    </svg>
+                    Open eSewa App
+                </button>
+            </div>
+            
+            <div class="success-message">
+                <div class="details-title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 16.17L4.83 12L3.41 13.41L9 19L21 7L19.59 5.59L9 16.17Z" fill="currentColor"/>
+                    </svg>
+                    Thank You for Your Support!
+                </div>
+                <p style="margin-top: 0.5rem;">
+                    Your tip helps us continue creating great content for Nepal. Dhanyabad!
+                </p>
+            </div>
+        </div>
+        
+        <div class="app-footer">
+            <p>Nepal Tip Jar v2.0 • Secure Payment Platform ©rammijar 2025</p>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Service</a>
+                <a href="#" class="footer-link">Help Center</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                themeIcon.className = 'fas fa-sun';
+                themeIcon.style.color = '#FFD700';
+            } else {
+                themeIcon.className = 'fas fa-moon';
+                themeIcon.style.color = 'white';
+            }
+        });
+        
+        // Payment method selection
+        const paymentMethods = document.querySelectorAll('.payment-method');
+        
+        paymentMethods.forEach(method => {
+            method.addEventListener('click', () => {
+                // Remove selected class from all methods
+                paymentMethods.forEach(m => m.classList.remove('selected'));
+                
+                // Add selected class to clicked method
+                method.classList.add('selected');
+                
+                // Update payment method title
+                const methodName = method.dataset.method;
+                const title = document.querySelector('.card:nth-child(2) .card-title');
+                const openBtn = document.querySelector('.btn-secondary');
+                const openBtnIcon = openBtn.querySelector('svg');
+                
+                if (methodName === 'esewa') {
+                    title.innerHTML = `
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 21C4.45 21 3.97917 20.8042 3.5875 20.4125C3.19583 20.0208 3 19.55 3 19V5C3 4.45 3.19583 3.97917 3.5875 3.5875C3.97917 3.19583 4.45 3 5 3H19C19.55 3 20.0208 3.19583 20.4125 3.5875C20.8042 3.97917 21 4.45 21 5V19C21 19.55 20.8042 20.0208 20.4125 20.4125C20.0208 20.8042 19.55 21 19 21H5ZM5 19H19V5H5V19ZM7 17H17V7H7V17Z" fill="currentColor"/>
+                        </svg>
+                        Pay with eSewa
+                    `;
+                    
+                    openBtn.innerHTML = `
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17 1H7C5.9 1 5 1.9 5 3V21C5 22.1 5.9 23 7 23H17C18.1 23 19 22.1 19 21V3C19 1.9 18.1 1 17 1ZM17 19H7V5H17V19Z" fill="currentColor"/>
+                        </svg>
+                        Open eSewa App
+                    `;
+                } else if (methodName === 'khalti') {
+                    title.innerHTML = `
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 21C4.45 21 3.97917 20.8042 3.5875 20.4125C3.19583 20.0208 3 19.55 3 19V5C3 4.45 3.19583 3.97917 3.5875 3.5875C3.97917 3.19583 4.45 3 5 3H19C19.55 3 20.0208 3.19583 20.4125 3.5875C20.8042 3.97917 21 4.45 21 5V19C21 19.55 20.8042 20.0208 20.4125 20.4125C20.0208 20.8042 19.55 21 19 21H5ZM5 19H19V5H5V19ZM7 17H17V7H7V17Z" fill="currentColor"/>
+                        </svg>
+                        Pay with Khalti
+                    `;
+                    
+                    openBtn.innerHTML = `
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17 1H7C5.9 1 5 1.9 5 3V21C5 22.1 5.9 23 7 23H17C18.1 23 19 22.1 19 21V3C19 1.9 18.1 1 17 1ZM17 19H7V5H17V19Z" fill="currentColor"/>
+                        </svg>
+                        Open Khalti App
+                    `;
+                } else {
+                    title.innerHTML = `
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 5V19C21 20.1 20.1 21 19 21H5C3.9 21 3 20.1 3 19V5C3 3.9 3.9 3 5 3H19C20.1 3 21 3.9 21 5ZM11 17H13V11H11V17ZM11 9H13V7H11V9Z" fill="currentColor"/>
+                        </svg>
+                        Bank Transfer
+                    `;
+                    
+                    openBtn.innerHTML = `
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16 1H4C2.9 1 2 1.9 2 3V17H4V3H16V1ZM19 5H8C6.9 5 6 5.9 6 7V21C6 22.1 6.9 23 8 23H19C20.1 23 21 22.1 21 21V7C21 5.9 20.1 5 19 5ZM8 21V7H19V21H8Z" fill="currentColor"/>
+                        </svg>
+                        Copy Bank Details
+                    `;
+                }
+            });
+        });
+        
+        // Update amount in payment details
+        const amountInput = document.querySelector('input[type="number"]');
+        const amountDisplay = document.querySelector('.detail-item:last-child span:last-child');
+        
+        amountInput.addEventListener('input', () => {
+            const amount = amountInput.value || '100';
+            amountDisplay.textContent = `NPR ${amount}.00`;
+        });
+        
+        // Open eSewa/Khalti app buttons
+        const openAppBtn = document.querySelector('.btn-secondary');
+        
+        openAppBtn.addEventListener('click', () => {
+            const selectedMethod = document.querySelector('.payment-method.selected').dataset.method;
+            let message = '';
+            
+            if (selectedMethod === 'esewa') {
+                message = 'Opening eSewa app...';
+            } else if (selectedMethod === 'khalti') {
+                message = 'Opening Khalti app...';
+            } else {
+                message = 'Bank details copied to clipboard!';
+            }
+            
+            // Create notification
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.position = 'fixed';
+            notification.style.bottom = '20px';
+            notification.style.left = '50%';
+            notification.style.transform = 'translateX(-50%)';
+            notification.style.backgroundColor = 'rgba(0,0,0,0.8)';
+            notification.style.color = 'white';
+            notification.style.padding = '10px 20px';
+            notification.style.borderRadius = '8px';
+            notification.style.zIndex = '1000';
+            notification.style.fontSize = '0.9rem';
+            
+            if (document.body.classList.contains('dark-mode')) {
+                notification.style.backgroundColor = 'rgba(76, 175, 80, 0.9)';
+            }
+            
+            document.body.appendChild(notification);
+            
+            // Remove notification after 3 seconds
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        });
+        
+        // Send tip button
+        const sendBtn = document.querySelector('.btn');
+        sendBtn.addEventListener('click', () => {
+            const amount = amountInput.value || '100';
+            const method = document.querySelector('.payment-method.selected').dataset.method;
+            
+            // Create notification
+            const notification = document.createElement('div');
+            notification.textContent = `Processing NPR ${amount} via ${method}...`;
+            notification.style.position = 'fixed';
+            notification.style.bottom = '20px';
+            notification.style.left = '50%';
+            notification.style.transform = 'translateX(-50%)';
+            notification.style.backgroundColor = 'rgba(0,0,0,0.8)';
+            notification.style.color = 'white';
+            notification.style.padding = '10px 20px';
+            notification.style.borderRadius = '8px';
+            notification.style.zIndex = '1000';
+            notification.style.fontSize = '0.9rem';
+            
+            if (document.body.classList.contains('dark-mode')) {
+                notification.style.backgroundColor = 'rgba(76, 175, 80, 0.9)';
+            }
+            
+            document.body.appendChild(notification);
+            
+            // Simulate payment processing
+            setTimeout(() => {
+                notification.textContent = `Success! NPR ${amount} sent via ${method}`;
+                notification.style.backgroundColor = 'rgba(76, 175, 80, 0.9)';
+                
+                // Remove notification after 3 seconds
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
+                  
+                          
